@@ -1,11 +1,21 @@
 filename,rhotacism
-cv-valid-train/Perekaman baru 87.wav,normal
-cv-valid-train/Perekaman baru 88.wav,normal
-cv-valid-train/Perekaman baru 89.wav,normal
-cv-valid-train/Perekaman baru 90.wav,normal
-cv-valid-train/Perekaman baru 91.wav,normal
-cv-valid-train/Perekaman baru 100.wav,rhotacism
-cv-valid-train/Perekaman baru 101.wav,rhotacism
-cv-valid-train/Perekaman baru 102.wav,rhotacism
-cv-valid-train/Perekaman baru 103.wav,rhotacism
-cv-valid-train/Perekaman baru 104.wav,rhotacism
+cv-valid-train/tc1.wav,normal
+cv-valid-train/tc2.wav,normal
+cv-valid-train/tc3.wav,normal
+cv-valid-train/tc4.wav,normal
+cv-valid-train/tc5.wav,normal
+cv-valid-train/tc6.wav,normal
+cv-valid-train/tc7.wav,normal
+cv-valid-train/tc8.wav,normal
+cv-valid-train/tc9.wav,normal
+cv-valid-train/tc10.wav,normal
+cv-valid-train/c1.wav,rhotacism
+cv-valid-train/c2.wav,rhotacism
+cv-valid-train/c3.wav,rhotacism
+cv-valid-train/c4.wav,rhotacism
+cv-valid-train/c5.wav,rhotacism
+cv-valid-train/c6.wav,rhotacism
+cv-valid-train/c7.wav,rhotacism
+cv-valid-train/c8.wav,rhotacism
+cv-valid-train/c9.wav,rhotacism
+cv-valid-train/c10.wav,rhotacism

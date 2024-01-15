@@ -1,21 +1,21 @@
 filename,rhotacism
-data/cv-other-train/Perekaman baru 75.npy,normal
-data/cv-other-train/Perekaman baru 76.npy,normal
-data/cv-other-train/Perekaman baru 77.npy,normal
-data/cv-other-train/Perekaman baru 78.npy,normal
-data/cv-other-train/Perekaman baru 94.npy,normal
-data/cv-valid-train/Perekaman baru 87.npy,normal
-data/cv-valid-train/Perekaman baru 88.npy,normal
-data/cv-valid-train/Perekaman baru 89.npy,normal
-data/cv-valid-train/Perekaman baru 90.npy,normal
-data/cv-valid-train/Perekaman baru 91.npy,normal
-data/cv-other-train/Perekaman baru 97.npy,rhotacism
-data/cv-other-train/Perekaman baru 113.npy,rhotacism
-data/cv-other-train/Perekaman baru 114.npy,rhotacism
-data/cv-other-train/Perekaman baru 115.npy,rhotacism
-data/cv-other-train/Perekaman baru 116.npy,rhotacism
-data/cv-valid-train/Perekaman baru 100.npy,rhotacism
-data/cv-valid-train/Perekaman baru 101.npy,rhotacism
-data/cv-valid-train/Perekaman baru 102.npy,rhotacism
-data/cv-valid-train/Perekaman baru 103.npy,rhotacism
-data/cv-valid-train/Perekaman baru 104.npy,rhotacism
+data/cv-other-train/tc1.npy,normal
+data/cv-other-train/tc2.npy,normal
+data/cv-other-train/tc3.npy,normal
+data/cv-other-train/tc4.npy,normal
+data/cv-other-train/tc5.npy,normal
+data/cv-valid-train/tc6.npy,normal
+data/cv-valid-train/tc7.npy,normal
+data/cv-valid-train/tc8.npy,normal
+data/cv-valid-train/tc9.npy,normal
+data/cv-valid-train/tc10.npy,normal
+data/cv-other-train/c1.npy,rhotacism
+data/cv-other-train/c2.npy,rhotacism
+data/cv-other-train/c3.npy,rhotacism
+data/cv-other-train/c4.npy,rhotacism
+data/cv-other-train/c5.npy,rhotacism
+data/cv-valid-train/c6.npy,rhotacism
+data/cv-valid-train/c7.npy,rhotacism
+data/cv-valid-train/c8.npy,rhotacism
+data/cv-valid-train/c9.npy,rhotacism
+data/cv-valid-train/c10.npy,rhotacism

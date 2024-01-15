@@ -1,11 +1,21 @@
 filename,rhotacism
-cv-valid-dev/Perekaman baru 79.wav,normal
-cv-valid-dev/Perekaman baru 80.wav,normal
-cv-valid-dev/Perekaman baru 81.wav,normal
-cv-valid-dev/Perekaman baru 82.wav,normal
-cv-valid-dev/Perekaman baru 93.wav,normal
-cv-valid-dev/Perekaman baru 98.wav,rhotacism
-cv-valid-dev/Perekaman baru 109.wav,rhotacism
-cv-valid-dev/Perekaman baru 110.wav,rhotacism
-cv-valid-dev/Perekaman baru 111.wav,rhotacism
-cv-valid-dev/Perekaman baru 112.wav,rhotacism
+cv-valid-dev/tc1.wav,normal
+cv-valid-dev/tc2.wav,normal
+cv-valid-dev/tc3.wav,normal
+cv-valid-dev/tc4.wav,normal
+cv-valid-dev/tc5.wav,normal
+cv-valid-dev/tc6.wav,normal
+cv-valid-dev/tc7.wav,normal
+cv-valid-dev/tc8.wav,normal
+cv-valid-dev/tc9.wav,normal
+cv-valid-dev/tc10.wav,normal
+cv-valid-dev/c1.wav,rhotacism
+cv-valid-dev/c2.wav,rhotacism
+cv-valid-dev/c3.wav,rhotacism
+cv-valid-dev/c4.wav,rhotacism
+cv-valid-dev/c5.wav,rhotacism
+cv-valid-dev/c6.wav,rhotacism
+cv-valid-dev/c7.wav,rhotacism
+cv-valid-dev/c8.wav,rhotacism
+cv-valid-dev/c9.wav,rhotacism
+cv-valid-dev/c10.wav,rhotacism
