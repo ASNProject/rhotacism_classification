@@ -165,6 +165,7 @@ def extract_feature(file_name, **kwargs):
         result = np.hstack((result, tonnetz))
     return result
 
+
 # Fungsi untuk menampilkan spektrogram dari file audio
 def plot_spectrogram(file_name):
     X, sample_rate = librosa.load(file_name)
@@ -177,6 +178,103 @@ def plot_spectrogram(file_name):
     # Menampilkan spektrogram
     plt.savefig('spectrogram.png', bbox_inches='tight', pad_inches=0, transparent=True)
     plt.close()
+
+
+def plot_frame_blocking(y, sr, frame_length=0.025, frame_stride=0.01):
+    frame_size = int(frame_length * sr)
+    frame_step = int(frame_stride * sr)
+    signal_length = len(y)
+    num_frames = int(np.ceil(float(np.abs(signal_length - frame_size)) / frame_step))
+
+    pad_signal_length = num_frames * frame_step + frame_size
+    z = np.zeros((pad_signal_length - signal_length))
+    pad_signal = np.append(y, z)
+
+    indices = np.tile(np.arange(0, frame_size), (num_frames, 1)) + np.tile(
+        np.arange(0, num_frames * frame_step, frame_step), (frame_size, 1)).T
+    frames = pad_signal[indices.astype(np.int32, copy=False)]
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(frames.T)
+    plt.title("Frame Blocking")
+    plt.xlabel("Samples")
+    plt.ylabel("Amplitude")
+    plt.show()
+
+
+def plot_pre_emphasis(y, pre_emphasis=0.95):
+    emphasized_signal = np.append(y[0], y[1:] - pre_emphasis * y[:-1])
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(emphasized_signal)
+    plt.title("Pre-emphasis")
+    plt.xlabel("Samples")
+    plt.ylabel("Amplitude")
+    plt.show()
+
+
+def plot_filter_bank(y, sr, nfilt=20):
+    emphasized_signal = np.append(y[0], y[1:] - 0.97 * y[:-1])
+    frame_size = 0.025
+    frame_stride = 0.01
+    frame_length = int(round(frame_size * sr))
+    frame_step = int(round(frame_stride * sr))
+    signal_length = len(emphasized_signal)
+    num_frames = int(np.ceil(float(np.abs(signal_length - frame_length)) / frame_step))
+
+    pad_signal_length = num_frames * frame_step + frame_length
+    z = np.zeros((pad_signal_length - signal_length))
+    pad_signal = np.append(emphasized_signal, z)
+
+    indices = np.tile(np.arange(0, frame_length), (num_frames, 1)) + np.tile(
+        np.arange(0, num_frames * frame_step, frame_step), (frame_length, 1)).T
+    frames = pad_signal[indices.astype(np.int32, copy=False)]
+
+    NFFT = 512
+    mag_frames = np.absolute(np.fft.rfft(frames, NFFT))
+    pow_frames = ((1.0 / NFFT) * ((mag_frames) ** 2))
+
+    low_freq_mel = 0
+    high_freq_mel = (2595 * np.log10(1 + (sr / 2) / 700))
+    mel_points = np.linspace(low_freq_mel, high_freq_mel, nfilt + 2)
+    hz_points = (700 * (10 ** (mel_points / 2595) - 1))
+    bin = np.floor((NFFT + 1) * hz_points / sr)
+
+    fbank = np.zeros((nfilt, int(np.floor(NFFT / 2 + 1))))
+    for m in range(1, nfilt + 1):
+        f_m_minus = int(bin[m - 1])
+        f_m = int(bin[m])
+        f_m_plus = int(bin[m + 1])
+
+        for k in range(f_m_minus, f_m):
+            fbank[m - 1, k] = (k - bin[m - 1]) / (bin[m] - bin[m - 1])
+        for k in range(f_m, f_m_plus):
+            fbank[m - 1, k] = (bin[m + 1] - k) / (bin[m + 1] - bin[m])
+
+    filter_banks = np.dot(pow_frames, fbank.T)
+    filter_banks = np.where(filter_banks == 0, np.finfo(float).eps, filter_banks)
+    filter_banks = 20 * np.log10(filter_banks)
+
+    plt.figure(figsize=(10, 6))
+    plt.imshow(filter_banks.T, cmap='viridis', aspect='auto', origin='lower')
+    plt.title("Filter Bank")
+    plt.xlabel("Frames")
+    plt.ylabel("Filter Banks")
+    plt.colorbar(format='%+2.0f dB')
+    plt.show()
+
+
+def plot_mfcc(y, sr, n_mfcc=13):
+    emphasized_signal = np.append(y[0], y[1:] - 0.97 * y[:-1])
+    mfccs = librosa.feature.mfcc(y=emphasized_signal, sr=sr, n_mfcc=n_mfcc)
+
+    plt.figure(figsize=(10, 6))
+    librosa.display.specshow(mfccs, sr=sr, x_axis='time')
+    plt.title("MFCC")
+    plt.xlabel("Time")
+    plt.ylabel("MFCC Coefficients")
+    plt.colorbar()
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -201,6 +299,20 @@ if __name__ == "__main__":
     # Menampilkan plot gelombang suara
     y, sr = librosa.load(file)
 
+    print("Plotting frame blocking...")
+    plot_frame_blocking(y, sr)
+
+    print("Plotting pre-emphasis...")
+    plot_pre_emphasis(y)
+
+    print("Plotting filter bank...")
+    plot_filter_bank(y, sr)
+
+    print("Plotting MFCC...")
+    plot_mfcc(y, sr)
+
+    print("All plots are generated.")
+
     if not file or not os.path.isfile(file):
         # if file not provided, or it doesn't exist, use your voice
         print("Please waiting")
@@ -224,4 +336,3 @@ if __name__ == "__main__":
     plt.xlabel('Waktu (sampel)')
     plt.ylabel('Amplitudo')
     plt.show()
-
