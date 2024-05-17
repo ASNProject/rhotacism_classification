@@ -81,7 +81,7 @@ for j, csv_file in enumerate(csv_files):
             #create that folder if it doesn't exist
             if not os.path.isdir(os.path.dirname(target_path)):
                 os.mkdir(os.path.dirname(target_path))
-            features = extract_feature(src_path, mel=True)
+            features = extract_feature(src_path, mfcc=True)
             target_filename = target_path.split(".")[0]
             np.save(target_filename, features)
             # shutil.copyfile(src_path, target_path)

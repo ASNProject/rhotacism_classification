@@ -321,7 +321,7 @@ if __name__ == "__main__":
         # record the file (start talking)
         record_to_file(file)
     # extract features and reshape it
-    features = extract_feature(file, mel=True).reshape(1, -1)
+    features = extract_feature(file, mfcc=True).reshape(1, -1)
     # predict the gender!
     rhotacism_prob = model.predict(features)[0][0]
     normal_prob = 1 - rhotacism_prob
