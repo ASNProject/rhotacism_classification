@@ -43,6 +43,11 @@ def extract_feature(file_name, **kwargs):
     if tonnetz:
         tonnetz = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(X), sr=sample_rate).T,axis=0)
         result = np.hstack((result, tonnetz))
+    expected_shape = 128
+    if result.shape[0] < expected_shape:
+        result = np.pad(result, (0, expected_shape - result.shape[0]), 'constant')
+    elif result.shape[0] > expected_shape:
+        result = result[:expected_shape]
     return result
 
 dirname = "data"

@@ -69,11 +69,11 @@ def add_silence(snd_data, seconds):
 
 def record():
     """
-    Record a word or words from the microphone and 
+    Record a word or words from the microphone and
     return the data as an array of signed shorts.
-    Normalizes the audio, trims silence from the 
-    start and end, and pads with 0.5 seconds of 
-    blank sound to make sure VLC et al can play 
+    Normalizes the audio, trims silence from the
+    start and end, and pads with 0.5 seconds of
+    blank sound to make sure VLC et al can play
     it without getting chopped off.
     """
     p = pyaudio.PyAudio()
@@ -163,6 +163,12 @@ def extract_feature(file_name, **kwargs):
     if tonnetz:
         tonnetz = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(X), sr=sample_rate).T, axis=0)
         result = np.hstack((result, tonnetz))
+
+    # expected_shape = 128
+    # if result.shape[0] < expected_shape:
+    #     result = np.pad(result, (0, expected_shape - result.shape[0]), 'constant')
+    # elif result.shape[0] > expected_shape:
+    #     result = result[:expected_shape]
     return result
 
 
@@ -287,7 +293,9 @@ if __name__ == "__main__":
                                     and perform inference on a sample you provide (either using your voice or a file)""")
     parser.add_argument("-f", "--file", help="The path to the file, preferred to be in WAV format")
     args = parser.parse_args()
-    file = args.file
+
+    ### GANTI DISINI
+    file = 'cv-invalid/tc1.wav'
     # construct the model
     model = create_model()
     # load the saved/trained weights
@@ -299,29 +307,29 @@ if __name__ == "__main__":
     # Menampilkan plot gelombang suara
     y, sr = librosa.load(file)
 
-    print("Plotting frame blocking...")
-    plot_frame_blocking(y, sr)
-
-    print("Plotting pre-emphasis...")
-    plot_pre_emphasis(y)
-
-    print("Plotting filter bank...")
-    plot_filter_bank(y, sr)
-
-    print("Plotting MFCC...")
-    plot_mfcc(y, sr)
-
-    print("All plots are generated.")
+    # print("Plotting frame blocking...")
+    # plot_frame_blocking(y, sr)
+    #
+    # print("Plotting pre-emphasis...")
+    # plot_pre_emphasis(y)
+    #
+    # print("Plotting filter bank...")
+    # plot_filter_bank(y, sr)
+    #
+    # print("Plotting MFCC...")
+    # plot_mfcc(y, sr)
+    #
+    # print("All plots are generated.")
 
     if not file or not os.path.isfile(file):
         # if file not provided, or it doesn't exist, use your voice
         print("Please waiting")
         # put the file name here
-        file = "cv-invalid/Perekaman baru.wav"
+        file = "cv-invalid/c7.wav"
         # record the file (start talking)
         record_to_file(file)
     # extract features and reshape it
-    features = extract_feature(file, mfcc=True).reshape(1, -1)
+    features = extract_feature(file, mel=True).reshape(1, -1)
     # predict the gender!
     rhotacism_prob = model.predict(features)[0][0]
     normal_prob = 1 - rhotacism_prob
@@ -336,3 +344,48 @@ if __name__ == "__main__":
     plt.xlabel('Waktu (sampel)')
     plt.ylabel('Amplitudo')
     plt.show()
+
+
+def predict_rhotacism():
+    from utils import load_data, split_data, create_model
+    import argparse
+
+    parser = argparse.ArgumentParser(description="""Gender recognition script, this will load the model you trained, 
+                                       and perform inference on a sample you provide (either using your voice or a file)""")
+    parser.add_argument("-f", "--file", help="The path to the file, preferred to be in WAV format")
+    args = parser.parse_args()
+
+    file = 'cv-invalid/c1.wav'
+    # construct the model
+    model = create_model()
+    # load the saved/trained weights
+    model.load_weights("results/model.keras")
+
+    y, sr = librosa.load(file)
+
+    if not file or not os.path.isfile(file):
+        # if file not provided, or it doesn't exist, use your voice
+        print("Please waiting")
+        # put the file name here
+        file = "cv-invalid/c7.wav"
+        # record the file (start talking)
+        record_to_file(file)
+    # extract features and reshape it
+    features = extract_feature(file, mel=True).reshape(1, -1)
+    # predict the gender!
+    rhotacism_prob = model.predict(features)[0][0]
+    normal_prob = 1 - rhotacism_prob
+    gender = "Cadel" if rhotacism_prob > normal_prob else "Normal"
+    # show the result!
+    print("Result:", gender)
+    print(f"Probabilities:     Rhotacism: {rhotacism_prob * 100:.2f}%    Normal: {normal_prob * 100:.2f}%")
+    result_text = f"Result: {gender}\nProb: Rhotacism: {rhotacism_prob * 100:.2f}% Normal: {normal_prob * 100:.2f}%"
+    # Membuat plot gelombang suara
+    plt.figure(figsize=(10, 4))
+    plt.plot(y)
+    plt.title('Gelombang Suara')
+    plt.xlabel('Waktu (sampel)')
+    plt.ylabel('Amplitudo')
+    plt.savefig("image.png")
+    # plt.show()
+    return result_text
