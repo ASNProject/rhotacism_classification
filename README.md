@@ -21,3 +21,8 @@ python main.py
 ```
 lsusb
 ```
+
+### Screenshot
+
+https://github.com/ASNProject/rhotacism_classification/assets/49858542/3307baf1-adf3-48f5-a78e-f5f39583bbfa
+
