@@ -1,8 +1,8 @@
 # rhotacism_classification
 
 ### Features
-[x] Record Audio
-[x] Detection Rhotacism
+- [x] Record Audio
+- [x] Detection Rhotacism
 
 ### Install library
 ```
