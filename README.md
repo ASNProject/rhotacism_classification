@@ -1,5 +1,8 @@
 # rhotacism_classification
 
+### Features
+[X] Record Audio
+
 ### Install library
 ```
 pip install requirements.txt
