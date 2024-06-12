@@ -9,3 +9,8 @@ pip install requirements.txt
 ```
 python test.py --file "cv-invalid/Perekaman baru 125.wav" 
 ```
+
+### Check Program
+```
+lsusb
+```
