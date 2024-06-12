@@ -21,7 +21,7 @@ cd my_project
 python main.py
 ```
 
-### Check Program
+### Check USB Device
 ```
 lsusb
 ```
