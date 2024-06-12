@@ -10,6 +10,13 @@ pip install requirements.txt
 python test.py --file "cv-invalid/Perekaman baru 125.wav" 
 ```
 
+### Run For Raspberry
+```
+source venv/bin/activate
+cd my_project
+python main.py
+```
+
 ### Check Program
 ```
 lsusb
