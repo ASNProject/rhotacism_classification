@@ -1,17 +1,15 @@
 import pyaudio
 import wave
 
-
-def record():
+def record(callback):
     chunk = 4096  # Record in larger chunks of 4096 samples
     sample_format = pyaudio.paInt16  # 16 bits per sample
     channels = 1  # Change this to 1 or 2 depending on your device's capability
     fs = 44100  # Record at 44100 samples per second
-    seconds = 10
+    seconds = 10  # Durasi rekaman
     filename = "output.wav"
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
-
     print('Recording')
 
     # Try to open the stream
@@ -33,6 +31,7 @@ def record():
         try:
             data = stream.read(chunk, exception_on_overflow=False)
             frames.append(data)
+            callback(data)  # Panggil callback untuk memperbarui waveform
         except IOError as e:
             print(f"Error recording: {e}")
             # Attempt to reopen the stream if it closes due to overflow
