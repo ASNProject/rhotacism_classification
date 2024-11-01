@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageDraw, ImageTk
 from test import predict_rhotacism, prediction_mlp
+
 from record import record
 import os
 import numpy as np
