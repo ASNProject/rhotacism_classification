@@ -1,0 +1,21 @@
+Metode Ekstraksi Ciri
+Program menggunakan metode ekstraksi ciri MFCC (Mel-frequency cepstral coefficients). MFCC adalah representasi dari spektrum audio yang digunakan secara luas dalam pengolahan sinyal suara dan pengenalan suara. Berikut adalah langkah-langkah yang diambil untuk ekstraksi ciri dalam fungsi feature_extraction:
+
+Memuat Audio: Menggunakan librosa.load(), audio dimuat dari file, dan sinyal audio serta frekuensi sampel diambil.
+Menghitung MFCC: Dengan librosa.feature.mfcc(), fitur MFCC dihitung dari sinyal audio. Fungsi ini menghasilkan beberapa koefisien MFCC untuk setiap frame audio.
+Menghitung Rata-Rata: Rata-rata dari koefisien MFCC diambil untuk menghasilkan satu vektor fitur yang mewakili keseluruhan file audio.
+Metode Prediksi
+Prediksi dilakukan dengan menggunakan Multi-Layer Perceptron (MLP), yang merupakan salah satu jenis model jaringan saraf. Langkah-langkah untuk prediksi dalam fungsi prediction_mlp meliputi:
+
+Memuat Model: Model yang telah dilatih sebelumnya dimuat dari file mlp_model.keras menggunakan tf.keras.models.load_model().
+Memuat Scaler: Scaler (dalam hal ini StandardScaler) dimuat untuk menormalkan fitur input. Namun, cara pemuatan scaler di sini tampaknya tidak mencakup pemulihan dari file sebelumnya, sehingga harus diperhatikan agar scaler sesuai dengan fitur yang digunakan.
+Ekstraksi Fitur Baru: Fitur dari audio baru diekstraksi menggunakan fungsi feature_extraction().
+Normalisasi: Fitur baru dinormalisasi dengan scaler yang telah dilatih.
+Prediksi: Model digunakan untuk memprediksi kelas dari fitur yang telah dinormalisasi, menghasilkan probabilitas untuk kelas "tidak cadel" dan "cadel".
+Output
+Output dari proses prediksi mencakup:
+
+Probabilitas bahwa audio adalah "tidak cadel" dan "cadel".
+Penentuan status berdasarkan ambang batas probabilitas (0.5).
+Visualisasi dari fitur MFCC dengan menggambar plot rata-rata amplitudo koefisien MFCC.
+Dengan pendekatan ini, program menggabungkan teknik ekstraksi ciri dan prediksi untuk menganalisis file audio dan memberikan hasil berdasarkan model yang telah dilatih sebelumnya.
