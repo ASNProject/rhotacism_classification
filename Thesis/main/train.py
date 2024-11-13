@@ -89,6 +89,7 @@ def train():
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     # Train model
+    # Change epochs to increase accuracy
     model.fit(X_train, y_train, epochs=50, batch_size=10, validation_split=0.2)
 
     # Evaluate model
