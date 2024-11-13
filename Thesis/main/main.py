@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageDraw, ImageTk
 from test import predict_rhotacism, prediction_mlp
+from train import train
 
 from record import record
 import os
@@ -59,6 +60,12 @@ def button_detection():
         resultLabel.config(text=f"'{status}'", fg="red")
 
     check_image()
+
+
+def button_train():
+    print('Mulai Training')
+    result = train()
+    resultLabelTrain.config(text=f"{result}")
 
 
 def create_circle_image(diameter, color):
@@ -130,6 +137,15 @@ buttonDetection = Button(root,
                          )
 buttonDetection.place(x=130, y=280)
 
+# Create button for train
+buttonTrain = Button(root,
+                     text="TRAIN",
+                     command=button_train,
+                     padx=4,
+                     pady=4
+                     )
+buttonTrain.place(x=10, y=550)
+
 labelRecord = Label(root, text="", font=("Helvetica", 12))
 labelRecord.place(x=250, y=280)
 
@@ -153,6 +169,9 @@ textNormal.place(x=10, y=370)
 
 resultLabel = Label(root, text="", font=("Helvetica", 32))
 resultLabel.place(x=100, y=430)
+
+resultLabelTrain = Label(root, text="", font=("Helvetica", 12))
+resultLabelTrain.place(x=100, y=550)
 
 label_image = Label(root)
 label_text = Label(root)

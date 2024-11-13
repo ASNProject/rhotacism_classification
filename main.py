@@ -61,6 +61,10 @@ def button_detection():
     check_image()
 
 
+def button_train():
+    print('Mulai Training')
+
+
 def create_circle_image(diameter, color):
     image = Image.new("RGBA", (diameter, diameter), (255, 255, 255, 0))
     draw = ImageDraw.Draw(image)
@@ -129,6 +133,15 @@ buttonDetection = Button(root,
                          pady=4
                          )
 buttonDetection.place(x=130, y=280)
+
+# Create button for train
+buttonTrain = Button(root,
+                     text="TRAIN",
+                     command=button_train,
+                     padx=4,
+                     pady=4
+                     )
+buttonTrain.place(x=10, y=550)
 
 labelRecord = Label(root, text="", font=("Helvetica", 12))
 labelRecord.place(x=250, y=280)
