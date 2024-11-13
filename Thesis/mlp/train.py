@@ -2,18 +2,14 @@ import librosa
 import os
 import numpy as np
 import pandas as pd
-from keras import Sequential
-from keras.src.layers import Dense
+
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report, accuracy_score
-import tensorflow as tf
-# from tensorflow.python.keras.layers import Dense
-# from tensorflow.python.keras.models import Sequential
+from sklearn.neural_network import MLPClassifier
 
-
-# from tensorflow.keras.models import Sequential
-# from tensorflow.keras.layers import Dense
+import joblib
+import warnings
+from sklearn.exceptions import ConvergenceWarning
 
 
 def feature_extraction(file_path):
@@ -21,6 +17,8 @@ def feature_extraction(file_path):
     mfcc = np.mean(librosa.feature.mfcc(y=x, sr=sample_rate, n_mfcc=50).T, axis=0)
     return mfcc
 
+
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 # List untuk menyimpan fitur dari masing-masing audio
 features_list_c = []
@@ -78,20 +76,23 @@ X_scaled = scaler.fit_transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
 # Build model
-model = Sequential()
-model.add(Dense(100, input_dim=50, activation='relu'))
-model.add(Dense(1, activation='sigmoid'))
+mlp = MLPClassifier(hidden_layer_sizes=(100,),
+                    max_iter=2000,
+                    activation='relu',
+                    solver='sgd',
+                    alpha=0.0001,
+                    verbose=1,
+                    tol=1e-7,
+                    learning_rate_init=0.005,
+                    early_stopping=False,
+                    )
+mlp.fit(X_train, y_train)
 
-# Compile model
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+# Save the trained model and scaler
+# Save the model and scaler
+joblib.dump(mlp, 'mlp_model_sklearn.joblib')
+joblib.dump(scaler, 'scaler.joblib')
+print("Model and scaler saved.")
 
-# Train model
-model.fit(X_train, y_train, epochs=50, batch_size=10, validation_split=0.2)
-
-# Evaluate model
-loss, accuracy = model.evaluate(X_test, y_test)
-print(f"Test Accuracy: {accuracy}")
-
-# Save model
-model.save('mlp_model.keras')
-print("Model saved to 'mlp_model.keras'")
+accuracy = mlp.score(X_test, y_test)
+print(f"Test Akurasi: {accuracy * 100:.2f}%")

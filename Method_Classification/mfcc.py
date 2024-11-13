@@ -9,7 +9,7 @@ def feature_extraction(file_path):
     # Buka data audio
     x, sample_rate = librosa.load(file_path, res_type='kaiser_fast')
     # Ekstraksi fitur dari audio
-    mfcc = np.mean(librosa.feature.mfcc(y=x, sr=sample_rate, n_mfcc=50).T, axis=0)
+    mfcc = np.mean(librosa.feature.mfcc(y=x, sr=sample_rate, n_mfcc=16).T, axis=0)
     return mfcc
 
 
@@ -59,7 +59,7 @@ plt.savefig('mfcc_tidak_cadel_plot.png')
 plt.show()
 
 # Konversi list ke DataFrame
-columns = ['filename'] + [f'mfcc_{i}' for i in range(50)]
+columns = ['filename'] + [f'mfcc_{i}' for i in range(16)]
 features_df_c = pd.DataFrame(features_list_c, columns=columns)
 features_df_tc = pd.DataFrame(features_list_tc, columns=columns)
 

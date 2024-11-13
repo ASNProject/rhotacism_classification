@@ -1,12 +1,13 @@
 import pyaudio
 import wave
 
+
 def record(callback):
     chunk = 4096  # Record in larger chunks of 4096 samples
     sample_format = pyaudio.paInt16  # 16 bits per sample
     channels = 1  # Change this to 1 or 2 depending on your device's capability
     fs = 44100  # Record at 44100 samples per second
-    seconds = 10  # Durasi rekaman
+    seconds = 3  # Durasi rekaman
     filename = "output.wav"
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio

@@ -27,7 +27,7 @@ def button_record():
     global frames
     frames = []  # Reset frames
     threading.Thread(target=record, args=(callback,), daemon=True).start()  # Run record in a thread
-    root.after(12000, enable_button)
+    root.after(3000, enable_button)
 
 
 def callback(data):
@@ -155,7 +155,7 @@ labelWords.place(x=100, y=150)
 text1 = Label(root, text="When recording, please say the sentence below:", font=("Helvetica", 12))
 text1.place(x=10, y=60)
 
-text2 = Label(root, text="Result :", font=("Helvetica", 16))
+text2 = Label(root, text="Result", font=("Helvetica", 16))
 text2.place(x=10, y=320)
 
 text3 = Label(root, text="Waveform Result:", font=("Helvetica", 16))
