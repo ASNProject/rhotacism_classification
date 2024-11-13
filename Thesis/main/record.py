@@ -1,5 +1,12 @@
 import pyaudio
 import wave
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Set the Matplotlib backend to Agg to avoid GUI issues
+import matplotlib
+
+matplotlib.use('Agg')
 
 
 def record(callback):
@@ -66,3 +73,19 @@ def record(callback):
     wf.setframerate(fs)
     wf.writeframes(b''.join(frames))
     wf.close()
+
+    # Convert Audio frame to numpy array
+    audio_data = np.frombuffer(b''.join(frames), dtype=np.int16)
+
+    # Plot the waveform using matplotlib
+    plt.figure(figsize=(10, 4))
+    plt.plot(audio_data)
+    plt.title("Waveform of Recorded Audio")
+    plt.xlabel("Sample Index")
+    plt.ylabel("Amplitude")
+    plt.grid(True)
+
+    # Save the waveform plot as a PNG file
+    plt.savefig("waveform.png", format="png")
+    plt.close()
+    print("Waveform saved as 'waveform.png'")

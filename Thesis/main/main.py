@@ -40,6 +40,7 @@ def callback(data):
 def enable_button():
     labelRecord.config(text="Recording Successfully\nStart Detection",
                        anchor="w", justify="left")
+    check_waveform()
 
 
 def enable_text():
@@ -93,6 +94,19 @@ def check_image():
         label_image.place(x=500, y=350)
 
 
+def check_waveform():
+    if os.path.exists("waveform.png") and os.stat("waveform.png").st_size > 0:
+        img = Image.open("waveform.png")
+        img = img.resize((460, 200), Image.LANCZOS)
+        img = ImageTk.PhotoImage(img)
+        label_image.config(image=img)
+        label_image.image = img
+        label_image.place(x=550, y=88)
+    else:
+        label_text.config(text="No image available")
+        label_image.place(x=500, y=80)
+
+
 def update_waveform(data):
     ax.clear()
     ax.plot(data, color='blue')
@@ -114,7 +128,10 @@ circle_photo = ImageTk.PhotoImage(circle_image)
 circle_image2 = create_circle_image(12, "green")
 circle_photo2 = ImageTk.PhotoImage(circle_image2)
 
-titleText = Label(root, text="RHOTACISM DETECTION", font=("Helvetica", 24))
+text1 = Label(root, text="When recording, please say the sentence below:", font=("Helvetica", 12))
+text1.pack(side=TOP, pady=10)
+
+titleText = Label(root, text="'Laler Menclok Pager'", font=("Helvetica", 24))
 titleText.pack(side=TOP, pady=10)
 
 # Create button for record
@@ -126,7 +143,7 @@ buttonRecord = Button(root,
                       image=circle_photo,
                       compound="right"
                       )
-buttonRecord.place(x=10, y=280)
+buttonRecord.place(x=10, y=300)
 
 # Create button for detection
 buttonDetection = Button(root,
@@ -135,7 +152,7 @@ buttonDetection = Button(root,
                          padx=4,
                          pady=4
                          )
-buttonDetection.place(x=130, y=280)
+buttonDetection.place(x=130, y=300)
 
 # Create button for train
 buttonTrain = Button(root,
@@ -147,28 +164,25 @@ buttonTrain = Button(root,
 buttonTrain.place(x=10, y=550)
 
 labelRecord = Label(root, text="", font=("Helvetica", 12))
-labelRecord.place(x=250, y=280)
+labelRecord.place(x=250, y=300)
 
 labelWords = Label(root, text="", font=("Helvetica", 24))
 labelWords.place(x=100, y=150)
 
-text1 = Label(root, text="When recording, please say the sentence below:", font=("Helvetica", 12))
-text1.place(x=10, y=60)
-
 text2 = Label(root, text="Result", font=("Helvetica", 16))
-text2.place(x=10, y=320)
+text2.place(x=10, y=340)
 
 text3 = Label(root, text="Waveform Result:", font=("Helvetica", 16))
 text3.place(x=500, y=320)
 
 textRhotacism = Label(root, text="Rhotacism :", font=("Helvetica", 14))
-textRhotacism.place(x=10, y=350)
+textRhotacism.place(x=10, y=370)
 
 textNormal = Label(root, text="Normal      :", font=("Helvetica", 14))
-textNormal.place(x=10, y=370)
+textNormal.place(x=10, y=390)
 
 resultLabel = Label(root, text="", font=("Helvetica", 32))
-resultLabel.place(x=100, y=430)
+resultLabel.place(x=100, y=450)
 
 resultLabelTrain = Label(root, text="", font=("Helvetica", 12))
 resultLabelTrain.place(x=100, y=550)
@@ -179,7 +193,7 @@ label_text = Label(root)
 # Matplotlib setup dengan ukuran yang lebih kecil
 fig, ax = plt.subplots(figsize=(4, 3), dpi=25)
 canvas = FigureCanvasTkAgg(fig, master=root)
-canvas.get_tk_widget().place(x=500, y=60, width=500, height=200)
+canvas.get_tk_widget().place(x=15, y=90, width=500, height=200)
 ax.set_title("Waveform Recording")
 ax.set_xlabel("Time (s)")
 ax.set_ylabel("Amplitude")
